@@ -18,12 +18,32 @@
 #include <arduino.h>
 #include "Mts_SmartSwitch_Relay.h"
 #include "Mts_SmartSwitch_Display.h"
+#include "RTClib.h"
+
+
 
 /******************************************************************************
   Declarations
 *******************************************************************************/
 // define the number of bytes you want to access
 #define EEPROM_SIZE 1
+
+//RTC Declarations.
+#ifdef RTC
+RTC_DS1307 rtc;
+char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+
+
+const int buzzer  = 4; // Arduino pin connected to relay's pin
+String menuItems[] = {"1-Medicin", "2-Wake up", "3-Go out"};
+int songspeed = 1.5;
+int flag = 0;
+int menuPage = 0;
+int maxMenuPages = round(((sizeof(menuItems) / sizeof(String)) / 2) + .5);
+int cursorPosition = 0;
+int btn;
+int h = 0, m = 0;
+#endif
 
 /******************************************************************************
   Declarations
